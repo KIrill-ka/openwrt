@@ -191,3 +191,12 @@ define Device/wandboard_dual
   DEVICE_DTS := imx6dl-wandboard
 endef
 TARGET_DEVICES += wandboard_dual
+
+define Device/phytec_mira
+  DEVICE_VENDOR := Phytec
+  DEVICE_MODEL := Mira
+  DEVICE_DTS := imx6q-phytec-mira-rdk-emmc
+  KERNEL := kernel-bin
+  KERNEL_SUFFIX := -zImage
+endef
+TARGET_DEVICES += phytec_mira
