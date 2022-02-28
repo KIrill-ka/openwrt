@@ -1384,3 +1384,58 @@ define KernelPackage/qcom-qmi-helpers/description
 endef
 
 $(eval $(call KernelPackage,qcom-qmi-helpers))
+
+define KernelPackage/mhi
+  SUBMENU:=$(OTHER_MENU)
+  TITLE:=Modem Host Interface (MHI) bus
+  DEPENDS:=@LINUX_5_15
+  KCONFIG:=CONFIG_MHI_BUS \
+           CONFIG_MHI_BUS_DEBUG=y \
+           CONFIG_MHI_BUS_PCI_GENERIC=n \
+           CONFIG_MHI_NET=n
+  FILES:=$(LINUX_DIR)/drivers/bus/mhi/core/mhi.ko
+  AUTOLOAD:=$(call AutoProbe,mhi)
+endef
+
+define KernelPackage/mhi/description
+  Bus driver for MHI protocol.
+endef
+
+$(eval $(call KernelPackage,mhi))
+
+define KernelPackage/mfd-core
+  SUBMENU:=$(OTHER_MENU)
+  TITLE:=MFD core
+  KCONFIG:=CONFIG_MFD_CORE
+  FILES:=$(LINUX_DIR)/drivers/mfd/mfd-core.ko
+  AUTOLOAD:=$(call AutoProbe,mfd-core)
+endef
+
+define KernelPackage/mfd-core/description
+  MFD core
+endef
+
+$(eval $(call KernelPackage,mfd-core))
+
+define KernelPackage/da9062
+  SUBMENU:=$(OTHER_MENU)
+  TITLE:=DA9062
+  DEPENDS:=+kmod-mfd-core
+  KCONFIG:=CONFIG_MFD_DA9062 \
+           CONFIG_DA9062_WATCHDOG \
+           CONFIG_REGULATOR_DA9062 \
+           CONFIG_PINCTRL_DA9062=n \
+           CONFIG_RTC_DRV_DA9063=n \
+           CONFIG_DA9062_THERMAL=n
+  FILES:= \
+      $(LINUX_DIR)/drivers/mfd/da9062-core.ko \
+      $(LINUX_DIR)/drivers/watchdog/da9062_wdt.ko \
+      $(LINUX_DIR)/drivers/regulator/da9062-regulator.ko
+  AUTOLOAD:=$(call AutoProbe, da9062-core da9062-regulator)
+endef
+
+define KernelPackage/da9062/description
+  DA9062 controller
+endef
+
+$(eval $(call KernelPackage,da9062))
