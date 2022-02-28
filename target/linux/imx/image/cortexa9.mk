@@ -198,5 +198,6 @@ define Device/phytec_mira
   DEVICE_DTS := imx6q-phytec-mira-rdk-emmc
   KERNEL := kernel-bin
   KERNEL_SUFFIX := -zImage
+  DEVICE_PACKAGES := kmod-da9062
 endef
 TARGET_DEVICES += phytec_mira
