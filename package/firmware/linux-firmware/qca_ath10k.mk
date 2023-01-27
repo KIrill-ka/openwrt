@@ -139,6 +139,19 @@ define Package/ath10k-board-qca9984/install
 		$(1)/lib/firmware/ath10k/QCA9984/hw1.0/board-2.bin
 endef
 $(eval $(call BuildPackage,ath10k-board-qca9984))
+define Package/ath10k-board-qca9984-wle1216vx
+ SECTION:=firmware
+ CATEGORY:=Firmware
+ TITLE:=ath10k wle1216vx board firmware
+ CONFLICTS:=ath10k-board-qca9984
+endef
+define Package/ath10k-board-qca9984-wle1216vx/install
+	$(INSTALL_DIR) $(1)/lib/firmware/ath10k/QCA9984/hw1.0
+	$(INSTALL_DATA) \
+		wle1216vx-board-2.bin \
+		$(1)/lib/firmware/ath10k/QCA9984/hw1.0/board-2.bin
+endef
+$(eval $(call BuildPackage,ath10k-board-qca9984-wle1216vx))
 Package/ath10k-firmware-qca9984 = $(call Package/firmware-default,ath10k qca9984 firmware,+ath10k-board-qca9984)
 define Package/ath10k-firmware-qca9984/install
 	$(INSTALL_DIR) $(1)/lib/firmware/ath10k/QCA9984/hw1.0

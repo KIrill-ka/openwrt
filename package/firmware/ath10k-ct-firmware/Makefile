@@ -285,6 +285,24 @@ $(Package/ath10k-firmware-default)
     +!PACKAGE_kmod-ath10k-ct-smallbuffers:kmod-ath10k-ct
 endef
 
+define Package/ath10k-firmware-qca9984-ct-wle1216vx
+$(Package/ath10k-ct-firmware-default)
+  TITLE:=ath10k CT 10.4 wle1216vx fw for QCA9984
+  SECTION:=firmware
+  CATEGORY:=Firmware
+  PROVIDES:=\
+    ath10k-firmware-qca9984 \
+    ath10k-firmware-qca9984-ct
+  CONFLICTS:=\
+    ath10k-firmware-qca9984 \
+    ath10k-firmware-qca9984-ct \
+    ath10k-firmware-qca9984-ct-htt \
+    ath10k-firmware-qca9984-ct-full-htt
+  DEPENDS:=\
+    +ath10k-board-qca9984-wle1216vx \
+    +!PACKAGE_kmod-ath10k-ct-smallbuffers:kmod-ath10k-ct
+endef
+
 define Package/ath10k-firmware-qca4019-ct
 $(Package/ath10k-ct-firmware-default)
   TITLE:=ath10k CT 10.4 firmware for QCA4018/9
@@ -616,6 +634,12 @@ define Package/ath10k-firmware-qca9888-ct-htt/install
 		$(DL_DIR)/$(call CT_FIRMWARE_FILE_HTT,QCA9888) \
 		$(1)/lib/firmware/ath10k/QCA9888/hw2.0/ct-firmware-5.bin
 endef
+define Package/ath10k-firmware-qca9984-ct-wle1216vx/install
+	$(INSTALL_DIR) $(1)/lib/firmware/ath10k/QCA9984/hw1.0
+	$(INSTALL_DATA) \
+		wle1216vx-firmware-5.bin \
+		$(1)/lib/firmware/ath10k/QCA9984/hw1.0/firmware-5.bin
+endef
 
 
 $(eval $(call BuildPackage,ath10k-firmware-qca9887-ct))
@@ -634,3 +658,4 @@ $(eval $(call BuildPackage,ath10k-firmware-qca4019-ct-htt))
 $(eval $(call BuildPackage,ath10k-firmware-qca9888-ct))
 $(eval $(call BuildPackage,ath10k-firmware-qca9888-ct-full-htt))
 $(eval $(call BuildPackage,ath10k-firmware-qca9888-ct-htt))
+$(eval $(call BuildPackage,ath10k-firmware-qca9984-ct-wle1216vx))
